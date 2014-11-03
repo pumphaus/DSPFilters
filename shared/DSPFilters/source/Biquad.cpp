@@ -128,7 +128,7 @@ void BiquadBase::setCoefficients (double a0, double a1, double a2,
   m_b0 = b0/a0;
   m_b1 = b1/a0;
   m_b2 = b2/a0;
-#ifdef __SSE__
+#ifdef __SSE3__
   m_va0 = _mm_set1_ps(m_a0);
   m_vb0 = _mm_set1_ps(m_b0);
   m_vab12 = _mm_set_ps(m_b2, m_b1, m_a2, m_a1);
