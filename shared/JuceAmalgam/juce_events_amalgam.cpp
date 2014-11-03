@@ -58754,6 +58754,81 @@ void InterprocessConnectionServer::run()
 }
 
 /*** End of inlined file: juce_InterprocessConnectionServer.cpp ***/
+    
+/*** Start of inlined file: juce_osx_MessageQueue.h ***/
+#ifndef __JUCE_OSX_MESSAGEQUEUE_JUCEHEADER__
+#define __JUCE_OSX_MESSAGEQUEUE_JUCEHEADER__
+    
+    /* An internal message pump class used in OSX and iOS. */
+    class MessageQueue
+    {
+    public:
+        MessageQueue()
+        {
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_4 && ! JUCE_IOS
+            runLoop = CFRunLoopGetMain();
+#else
+            runLoop = CFRunLoopGetCurrent();
+#endif
+            
+            CFRunLoopSourceContext sourceContext = { 0 };
+            sourceContext.info = this;
+            sourceContext.perform = runLoopSourceCallback;
+            runLoopSource = CFRunLoopSourceCreate (kCFAllocatorDefault, 1, &sourceContext);
+            CFRunLoopAddSource (runLoop, runLoopSource, kCFRunLoopCommonModes);
+        }
+        
+        ~MessageQueue()
+        {
+            CFRunLoopRemoveSource (runLoop, runLoopSource, kCFRunLoopCommonModes);
+            CFRunLoopSourceInvalidate (runLoopSource);
+            CFRelease (runLoopSource);
+        }
+        
+        void post (Message* const message)
+        {
+            messages.add (message);
+            CFRunLoopSourceSignal (runLoopSource);
+            CFRunLoopWakeUp (runLoop);
+        }
+        
+    private:
+        ReferenceCountedArray <Message, CriticalSection> messages;
+        CriticalSection lock;
+        CFRunLoopRef runLoop;
+        CFRunLoopSourceRef runLoopSource;
+        
+        bool deliverNextMessage()
+        {
+            const Message::Ptr nextMessage (messages.removeAndReturn (0));
+            
+            if (nextMessage == nullptr)
+                return false;
+            
+            JUCE_AUTORELEASEPOOL
+            MessageManager::getInstance()->deliverMessage (nextMessage);
+            return true;
+        }
+        
+        void runLoopCallback()
+        {
+            for (int i = 4; --i >= 0;)
+                if (! deliverNextMessage())
+                    return;
+            
+            CFRunLoopSourceSignal (runLoopSource);
+            CFRunLoopWakeUp (runLoop);
+        }
+        
+        static void runLoopSourceCallback (void* info)
+        {
+            static_cast <MessageQueue*> (info)->runLoopCallback();
+        }
+    };
+    
+#endif   // __JUCE_OSX_MESSAGEQUEUE_JUCEHEADER__
+    
+/*** End of inlined file: juce_osx_MessageQueue.h ***/
 
 // END_AUTOINCLUDE
 
@@ -58826,82 +58901,6 @@ namespace
 #endif   // __JUCE_MAC_OBJCSUFFIX_JUCEHEADER__
 
 /*** End of inlined file: juce_mac_ObjCSuffix.h ***/
-
-
-/*** Start of inlined file: juce_osx_MessageQueue.h ***/
-#ifndef __JUCE_OSX_MESSAGEQUEUE_JUCEHEADER__
-#define __JUCE_OSX_MESSAGEQUEUE_JUCEHEADER__
-
-/* An internal message pump class used in OSX and iOS. */
-class MessageQueue
-{
-public:
-	MessageQueue()
-	{
-	   #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_4 && ! JUCE_IOS
-		runLoop = CFRunLoopGetMain();
-	   #else
-		runLoop = CFRunLoopGetCurrent();
-	   #endif
-
-		CFRunLoopSourceContext sourceContext = { 0 };
-		sourceContext.info = this;
-		sourceContext.perform = runLoopSourceCallback;
-		runLoopSource = CFRunLoopSourceCreate (kCFAllocatorDefault, 1, &sourceContext);
-		CFRunLoopAddSource (runLoop, runLoopSource, kCFRunLoopCommonModes);
-	}
-
-	~MessageQueue()
-	{
-		CFRunLoopRemoveSource (runLoop, runLoopSource, kCFRunLoopCommonModes);
-		CFRunLoopSourceInvalidate (runLoopSource);
-		CFRelease (runLoopSource);
-	}
-
-	void post (Message* const message)
-	{
-		messages.add (message);
-		CFRunLoopSourceSignal (runLoopSource);
-		CFRunLoopWakeUp (runLoop);
-	}
-
-private:
-	ReferenceCountedArray <Message, CriticalSection> messages;
-	CriticalSection lock;
-	CFRunLoopRef runLoop;
-	CFRunLoopSourceRef runLoopSource;
-
-	bool deliverNextMessage()
-	{
-		const Message::Ptr nextMessage (messages.removeAndReturn (0));
-
-		if (nextMessage == nullptr)
-			return false;
-
-		JUCE_AUTORELEASEPOOL
-		MessageManager::getInstance()->deliverMessage (nextMessage);
-		return true;
-	}
-
-	void runLoopCallback()
-	{
-		for (int i = 4; --i >= 0;)
-			if (! deliverNextMessage())
-				return;
-
-		CFRunLoopSourceSignal (runLoopSource);
-		CFRunLoopWakeUp (runLoop);
-	}
-
-	static void runLoopSourceCallback (void* info)
-	{
-		static_cast <MessageQueue*> (info)->runLoopCallback();
-	}
-};
-
-#endif   // __JUCE_OSX_MESSAGEQUEUE_JUCEHEADER__
-
-/*** End of inlined file: juce_osx_MessageQueue.h ***/
 
 
 /*** Start of inlined file: juce_mac_MessageManager.mm ***/

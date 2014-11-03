@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0050672319FB1E680030472F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0050672219FB1E680030472F /* Default-568h@2x.png */; };
 		2E60CAD113FF63650088FA2C /* Mac.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2E60CAD013FF63650088FA2C /* Mac.icns */; };
 		2E71C273140071AD00643CF1 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E71C26C140071AD00643CF1 /* Icon-72.png */; };
 		2E71C274140071AD00643CF1 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E71C26D140071AD00643CF1 /* Icon-Small-50.png */; };
@@ -139,6 +140,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0050672219FB1E680030472F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2E60CAD013FF63650088FA2C /* Mac.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Mac.icns; sourceTree = SOURCE_ROOT; };
 		2E71C26C140071AD00643CF1 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "iOS Icons/Icon-72.png"; sourceTree = SOURCE_ROOT; };
 		2E71C26D140071AD00643CF1 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "iOS Icons/Icon-Small-50.png"; sourceTree = SOURCE_ROOT; };
@@ -330,6 +332,7 @@
 		2ED29FAA13FCC0F900750A4E = {
 			isa = PBXGroup;
 			children = (
+				0050672219FB1E680030472F /* Default-568h@2x.png */,
 				2ED29FDC13FCC27400750A4E /* source */,
 				2E4C101B140DE20A0050ABF8 /* MacOS */,
 				2EA084AD13FCDE920051A437 /* iOS */,
@@ -484,7 +487,7 @@
 		2ED29FAC13FCC0F900750A4E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "One Guy Group, Inc.";
 			};
 			buildConfigurationList = 2ED29FAF13FCC0F900750A4E /* Build configuration list for PBXProject "DSPFiltersDemo" */;
@@ -564,6 +567,7 @@
 				2E71C275140071AD00643CF1 /* Icon-Small.png in Resources */,
 				2E71C276140071AD00643CF1 /* Icon-Small@2x.png in Resources */,
 				2E71C277140071AD00643CF1 /* Icon.png in Resources */,
+				0050672319FB1E680030472F /* Default-568h@2x.png in Resources */,
 				2E71C278140071AD00643CF1 /* Icon@2x.png in Resources */,
 				2E71C279140071AD00643CF1 /* iTunesArtwork.png in Resources */,
 			);
@@ -661,6 +665,7 @@
 			baseConfigurationReference = 2EF3B47E140F5095002CE947 /* SharedDebug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				EXECUTABLE_PREFIX = app;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
@@ -671,12 +676,14 @@
 					"JUCE_UNIT_TESTS=1",
 					"$(inherited)",
 				);
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					../../../JuceAmalgam,
 					../../../DSPFilters/include,
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "DSP Filters";
-				SDKROOT = macosx10.6;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -685,6 +692,7 @@
 			baseConfigurationReference = 2EF3B482140F5095002CE947 /* SharedReleaseApp.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				EXECUTABLE_PREFIX = app;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
@@ -694,12 +702,13 @@
 					"JUCE_ObjCExtraSuffix=",
 					"$(inherited)",
 				);
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					../../../JuceAmalgam,
 					../../../DSPFilters/include,
 				);
 				PRODUCT_NAME = "DSP Filters";
-				SDKROOT = macosx10.6;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
@@ -707,7 +716,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EF3B480140F5095002CE947 /* SharedMacOS.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MacInfo.plist;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -715,7 +726,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EF3B480140F5095002CE947 /* SharedMacOS.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MacInfo.plist;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -729,7 +742,7 @@
 					"\"$(SDKROOT)/../../Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks\"",
 				);
 				INFOPLIST_FILE = iOSInfo.plist;
-				SDKROOT = iphoneos4.3;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -743,7 +756,7 @@
 					"\"$(SDKROOT)/../../Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks\"",
 				);
 				INFOPLIST_FILE = iOSInfo.plist;
-				SDKROOT = iphoneos4.3;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};

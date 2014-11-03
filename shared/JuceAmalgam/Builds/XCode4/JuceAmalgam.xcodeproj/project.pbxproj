@@ -233,7 +233,7 @@
 		2ED29FAC13FCC0F900750A4E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "One Guy Group, Inc.";
 			};
 			buildConfigurationList = 2ED29FAF13FCC0F900750A4E /* Build configuration list for PBXProject "JuceAmalgam" */;
@@ -302,6 +302,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EF3B4BF140F6646002CE947 /* SharedMacOS.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = JuceAmalgamMac;
 			};
 			name = Debug;
@@ -310,6 +311,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EF3B4BF140F6646002CE947 /* SharedMacOS.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = JuceAmalgamMac;
 			};
 			name = Release;
@@ -319,7 +321,7 @@
 			baseConfigurationReference = 2EF3B4BE140F6646002CE947 /* SharediOS.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = JuceAmalgamiOS;
-				SDKROOT = iphoneos4.3;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -328,7 +330,7 @@
 			baseConfigurationReference = 2EF3B4BE140F6646002CE947 /* SharediOS.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = JuceAmalgamiOS;
-				SDKROOT = iphoneos4.3;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
@@ -336,6 +338,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EF3B4BD140F6646002CE947 /* SharedDebug.xcconfig */;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"_DEBUG=1",
@@ -343,6 +346,7 @@
 					"JUCE_UNIT_TESTS=1",
 					"$(inherited)",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -350,6 +354,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EF3B4C0140F6646002CE947 /* SharedRelease.xcconfig */;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NDEBUG=1",
 					"_NDEBUG=1",

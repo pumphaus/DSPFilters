@@ -73701,11 +73701,11 @@ void PNGAPI
 png_err(png_structp png_ptr)
 {
    if (png_ptr != NULL && png_ptr->error_fn != NULL)
-	  (*(png_ptr->error_fn))(png_ptr, '\0');
+	  (*(png_ptr->error_fn))(png_ptr, (png_const_charp)'\0');
 
    /* If the custom handler doesn't exist, or if it returns,
 	  use the default handler, which will not return. */
-   png_default_error(png_ptr, '\0');
+   png_default_error(png_ptr, (png_const_charp)'\0');
 }
 #endif /* PNG_NO_ERROR_TEXT */
 
@@ -91705,7 +91705,7 @@ png_check_keyword(png_structp png_ptr, png_charp key, png_charpp new_key)
    if (key_len > 79)
    {
 	  png_warning(png_ptr, "keyword length must be 1 - 79 characters");
-	  new_key[79] = '\0';
+	  new_key[79] = (char*)'\0';
 	  key_len = 79;
    }
 
