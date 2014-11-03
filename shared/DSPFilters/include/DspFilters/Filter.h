@@ -259,6 +259,13 @@ public:
     m_state.process (numSamples, arrayOfChannels, *((FilterClass*)this));
   }
 
+  template<typename It, typename... Iterators>
+  typename std::enable_if<!std::is_integral<It>::value>::type
+    process (It it, Iterators... its)
+  {
+    m_state.process (*((FilterClass*)this), it, its...);
+  }
+
 protected:
   ChannelsState <Channels,
                  typename FilterClass::template State <StateType> > m_state;

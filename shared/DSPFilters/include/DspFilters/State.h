@@ -379,17 +379,30 @@ public:
       filter.process (numSamples, arrayOfChannels[i], m_state[i]);
   }
 
-  template <class Filter, typename It>
-  void process (It first,
-                Filter& filter)
+  template <class Filter, typename... Iterators>
+  void process (Filter& filter,
+                Iterators... its
+                )
   {
-    for (int i = 0; i < Channels; ++i, ++first) {
-      filter.process (std::begin(*first), std::end(*first), m_state[i]);
-    }
+    static_assert(sizeof...(its) == 2 * Channels, "The number of iterator pairs must match the number of channels.");
+    process_impl(filter, its...);
   }
 
-
 private:
+  template <class Filter, typename Iterator, typename... Iterators>
+  void process_impl (Filter& filter,
+                Iterator firstA, Iterator lastA,
+                Iterators... its
+                )
+  {
+    static_assert(sizeof...(its) % 2 == 0, "Must pass iterators in pairs");
+    filter.process (firstA, lastA, m_state[Channels - sizeof...(its) / 2 - 1]);
+    process_impl(filter, its...);
+  }
+
+  template <class Filter>
+  void process_impl (Filter& filter) {}
+
   StateType m_state[Channels];
 };
 
