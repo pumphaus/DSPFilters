@@ -55,6 +55,7 @@ union __m128_buggy_gxx_up_to_4_7 {
 #include "DspFilters/Biquad.h"
 
 #include <stdexcept>
+#include <iterator>
 
 namespace Dsp {
 
@@ -378,6 +379,16 @@ public:
       filter.process (numSamples, arrayOfChannels[i], m_state[i]);
   }
 
+  template <class Filter, typename It>
+  void process (It first,
+                Filter& filter)
+  {
+    for (int i = 0; i < Channels; ++i, ++first) {
+      filter.process (std::begin(*first), std::end(*first), m_state[i]);
+    }
+  }
+
+
 private:
   StateType m_state[Channels];
 };
@@ -401,6 +412,13 @@ public:
   void process (int numSamples,
                 Sample* const* arrayOfChannels,
                 FilterDesign& filter)
+  {
+    throw std::logic_error ("attempt to process empty ChannelState");
+  }
+
+  template <class Filter, typename It>
+  void process (It first,
+                Filter& filter)
   {
     throw std::logic_error ("attempt to process empty ChannelState");
   }

@@ -184,6 +184,14 @@ public:
     }
   }
 
+  template <class StateType, typename It>
+  void process (It first, It last, StateType& state) const
+  {
+    for (; first != last; ++first) {
+      *first = state.process (*first, *this);
+    }
+  }
+
 protected:
   Cascade ();
 
