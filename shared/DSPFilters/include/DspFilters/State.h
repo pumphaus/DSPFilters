@@ -94,10 +94,10 @@ public:
 #elif defined(__ARM_NEON__)
     m_xy = vdupq_n_f32(0);
 #endif
-    m_x1 = 0;
-    m_x2 = 0;
-    m_y1 = 0;
-    m_y2 = 0;
+    m_x1 = FP();
+    m_x2 = FP();
+    m_y1 = FP();
+    m_y2 = FP();
   }
 
 #ifdef __SSE3__
@@ -204,8 +204,8 @@ public:
 
   void reset ()
   {
-    m_v1 = 0;
-    m_v2 = 0;
+    m_v1 = FP();
+    m_v2 = FP();
   }
 
   FP process1 (const FP in,
@@ -253,15 +253,15 @@ public:
 
   void reset ()
   {
-    m_v = 0;
-    m_s1 = 0;
-    m_s1_1 = 0;
-    m_s2 = 0;
-    m_s2_1 = 0;
-    m_s3 = 0;
-    m_s3_1 = 0;
-    m_s4 = 0;
-    m_s4_1 = 0;
+    m_v = FP();
+    m_s1 = FP();
+    m_s1_1 = FP();
+    m_s2 = FP();
+    m_s2_1 = FP();
+    m_s3 = FP();
+    m_s3_1 = FP();
+    m_s4 = FP();
+    m_s4_1 = FP();
   }
 
   inline FP process1 (const FP in,
@@ -313,10 +313,10 @@ public:
 
   void reset ()
   {
-    m_s1 = 0;
-    m_s1_1 = 0;
-    m_s2 = 0;
-    m_s2_1 = 0;
+    m_s1 = FP();
+    m_s1_1 = FP();
+    m_s2 = FP();
+    m_s2_1 = FP();
   }
 
   template <typename Sample>
