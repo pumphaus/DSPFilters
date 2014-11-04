@@ -98,7 +98,7 @@ public:
 #elif defined(__ARM_NEON__)
         out = (state++)->process1Simd (out, *stage++, vdup_n_f32(0));
 #else
-        out = (state++)->process1 (out, *stage++, 0);
+        out = (state++)->process1 (out, *stage++, typename StateType::FPType());
 #endif
       }
 #ifdef __SSE3__
@@ -126,7 +126,7 @@ public:
       typename StateType::FPType out = in;
       out = (state++)->process1 (out, *stage++, vsa);
       for (int i = 0; i < c.m_numStages - 1; i++) {
-        out = (state++)->process1 (out, *stage++, 0);
+        out = (state++)->process1 (out, *stage++, typename StateType::FPType());
       }
       return static_cast<Sample> (out);
     }
