@@ -94,7 +94,7 @@ void AnalogLowShelf::design (int numPoles, double gainDb)
     for (int i = 1; i <= pairs; ++i)
     {
       const double theta = doublePi * (0.5 - (2 * i - 1) / n2);
-      addPoleZeroConjugatePairs (std::polar (gp, theta), std::polar (gz, theta));
+      addPoleZeroConjugatePairs (std::polar (std::abs(gp), theta), std::polar (std::abs(gz), theta));
     }
     
     if (numPoles & 1)
