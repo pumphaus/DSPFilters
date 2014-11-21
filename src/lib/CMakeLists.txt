@@ -20,34 +20,11 @@ set(DspFilters_SRC
     State.cpp
 )
 
-set(DspFilters_HEADERS
-    DspFilters/Bessel.h
-    DspFilters/Biquad.h
-    DspFilters/Butterworth.h
-    DspFilters/Cascade.h
-    DspFilters/ChebyshevI.h
-    DspFilters/ChebyshevII.h
-    DspFilters/Common.h
-    DspFilters/Custom.h
-    DspFilters/Design.h
-    DspFilters/Dsp.h
-    DspFilters/Elliptic.h
-    DspFilters/Filter.h
-    DspFilters/Layout.h
-    DspFilters/Legendre.h
-    DspFilters/MathSupplement.h
-    DspFilters/Params.h
-    DspFilters/PoleFilter.h
-    DspFilters/RBJ.h
-    DspFilters/RootFinder.h
-    DspFilters/SmoothedFilter.h
-    DspFilters/State.h
-    DspFilters/Types.h
-    DspFilters/Utilities.h
-)
-
 add_library(DSPFilters SHARED ${DspFilters_SRC})
 target_link_libraries(DSPFilters)
 
-install(TARGETS DSPFilters DESTINATION lib)
-install(FILES ${DspFilters_HEADERS} DESTINATION include/DspFilters)
+install(TARGETS DSPFilters
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib)
+install(DIRECTORY DspFilters DESTINATION include)
