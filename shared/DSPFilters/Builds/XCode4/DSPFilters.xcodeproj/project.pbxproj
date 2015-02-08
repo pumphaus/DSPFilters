@@ -428,9 +428,9 @@
 /* Begin XCBuildConfiguration section */
 		2E7DB505140DFBDF009FE107 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EF3B477140F5059002CE947 /* SharedDebug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				HEADER_SEARCH_PATHS = ../../include;
 				ONLY_ACTIVE_ARCH = YES;
 			};
@@ -438,16 +438,15 @@
 		};
 		2E7DB506140DFBDF009FE107 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EF3B47A140F5059002CE947 /* SharedRelease.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				HEADER_SEARCH_PATHS = ../../include;
 			};
 			name = Release;
 		};
 		2E7DB508140DFBDF009FE107 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EF3B479140F5059002CE947 /* SharedMacOS.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
@@ -457,7 +456,6 @@
 		};
 		2E7DB509140DFBDF009FE107 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EF3B479140F5059002CE947 /* SharedMacOS.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
@@ -467,21 +465,25 @@
 		};
 		2E7DB530140DFC22009FE107 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EF3B478140F5059002CE947 /* SharediOS.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_UNROLL_LOOPS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
 		2E7DB531140DFC22009FE107 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EF3B478140F5059002CE947 /* SharediOS.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_UNROLL_LOOPS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};

@@ -333,13 +333,13 @@ struct HighPassDescription
 
 struct BandPassDescription
 {
-  static Kind getKind () { return kindHighPass; }
+  static Kind getKind () { return kindBandPass; }
   static const char* getName() { return "Butterworth Band Pass"; }
 };
 
 struct BandStopDescription
 {
-  static Kind getKind () { return kindHighPass; }
+  static Kind getKind () { return kindBandStop; }
   static const char* getName() { return "Butterworth Band Stop"; }
 };
 
