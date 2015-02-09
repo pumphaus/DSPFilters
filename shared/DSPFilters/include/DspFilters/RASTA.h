@@ -68,6 +68,12 @@ namespace Dsp {
 
 namespace RASTA {
 
+struct DigitalRASTADescription
+{
+    static Kind getKind () { return kindOther; }
+    static const char* getName() { return "Digital RASTA"; }
+};
+
 class DigitalRASTA : public LayoutBase
 {
 public:
@@ -83,6 +89,7 @@ private:
 
 class Filter : public DigitalPoleFilterBase <DigitalRASTA>
              , public CascadeStages <2>
+             , public DigitalRASTADescription
 {
 public:
   Filter ();
