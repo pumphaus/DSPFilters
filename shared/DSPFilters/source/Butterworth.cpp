@@ -59,6 +59,8 @@ void AnalogLowPass::design (int numPoles)
     for (int i = 0; i < pairs; ++i)
     {
       complex_t c = std::polar (1., doublePi_2 + (2 * i + 1) * doublePi / n2);
+      assert(!isinf(c.real()));
+      assert(!isinf(c.imag()));
       addPoleZeroConjugatePairs (c, infinity());
     }
 
@@ -202,7 +204,7 @@ void BandShelfBase::setup (int order,
                      m_analogProto);
 
   // HACK!
-  m_digitalProto.setNormal (((centerFrequency/sampleRate) < 0.25) ? doublePi : 0, 1);
+  // m_digitalProto.setNormal (((centerFrequency/sampleRate) < 0.25) ? doublePi : 0, 1);
 
   Cascade::setLayout (m_digitalProto);
 }
