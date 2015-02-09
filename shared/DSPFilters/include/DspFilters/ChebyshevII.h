@@ -62,7 +62,6 @@ public:
                double stopBandDb);
 
 private:
-  int m_numPoles;
   double m_stopBandDb;
 };
 
@@ -78,7 +77,6 @@ public:
                double stopBandDb);
 
 private:
-  int m_numPoles;
   double m_stopBandDb;
   double m_gainDb;
 };

@@ -154,9 +154,6 @@ public:
   AnalogLowPass ();
 
   void design (const int numPoles, WorkspaceBase* w);
-
-private:
-  int m_numPoles;
 };
 
 //------------------------------------------------------------------------------
