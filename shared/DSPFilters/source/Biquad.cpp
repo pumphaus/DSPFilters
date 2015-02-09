@@ -119,8 +119,16 @@ std::vector<PoleZeroPair> BiquadBase::getPoleZeros () const
 void BiquadBase::setCoefficients (double a0, double a1, double a2,
                                   double b0, double b1, double b2)
 {
-  assert (!Dsp::is_nan (a0) && !Dsp::is_nan (a1) && !Dsp::is_nan (a2) &&
-          !Dsp::is_nan (b0) && !Dsp::is_nan (b1) && !Dsp::is_nan (b2));
+#ifndef NDEBUG
+    assert (!Dsp::is_nan(a0));
+    assert (!Dsp::is_nan(b0));
+    assert (!Dsp::is_nan(a1));
+    assert (!Dsp::is_nan(a2));
+    assert (!Dsp::is_nan(b1));
+    assert (!Dsp::is_nan(b2));
+#endif
+    assert (!Dsp::is_nan (a0) && !Dsp::is_nan (a1) && !Dsp::is_nan (a2) &&
+            !Dsp::is_nan (b0) && !Dsp::is_nan (b1) && !Dsp::is_nan (b2));
 
   m_a0 = a0;
   m_a1 = a1/a0;
@@ -178,7 +186,7 @@ void BiquadBase::setTwoPole (complex_t pole1, complex_t zero1,
 
   if (pole1.imag() != 0)
   {
-    assert (pole2 == std::conj (pole1));
+    //assert (pole2 == std::conj (pole1));
 
     a1 = -2 * pole1.real();
     a2 = std::norm (pole1);
@@ -197,7 +205,7 @@ void BiquadBase::setTwoPole (complex_t pole1, complex_t zero1,
 
   if (zero1.imag() != 0)
   {
-    assert (zero2 == std::conj (zero1));
+    //assert (zero2 == std::conj (zero1));
 
     b1 = -2 * zero1.real();
     b2 = std::norm (zero1);
