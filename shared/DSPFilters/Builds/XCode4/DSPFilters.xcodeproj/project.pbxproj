@@ -363,7 +363,7 @@
 		2E7DB4FA140DFBDF009FE107 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "One Guy Group, Inc.";
 			};
 			buildConfigurationList = 2E7DB4FD140DFBDF009FE107 /* Build configuration list for PBXProject "DSPFilters" */;
@@ -478,7 +478,6 @@
 		2E7DB530140DFC22009FE107 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_UNROLL_LOOPS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
@@ -491,7 +490,6 @@
 		2E7DB531140DFC22009FE107 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					NDEBUG,
