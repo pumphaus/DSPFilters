@@ -106,6 +106,7 @@ HighPassTransform::HighPassTransform (double fc,
 
   const int numPoles = analog.getNumPoles ();
   const int pairs = numPoles / 2;
+  assert(numPoles > 0);
   for (int i = 0; i < pairs; ++i)
   {
     const PoleZeroPair& pair = analog[i];
@@ -137,11 +138,11 @@ BandPassTransform::BandPassTransform (double fc,
   const double fw_2 = fw / 2;
   if (fc - fw_2 < 0)
   {
-    LowPassTransform::transform (fc + fw_2, digital, analog);
+    LowPassTransform::LowPassTransform (fc + fw_2, digital, analog);
   }
   else if (fc + fw_2 >= 0.5)
   {
-    HighPassTransform::transform (fc - fw_2, digital, analog);
+    HighPassTransform::HighPassTransform (fc - fw_2, digital, analog);
   }
   else
 #endif
@@ -155,10 +156,10 @@ BandPassTransform::BandPassTransform (double fc,
   wc  = wc2 + ww;
 
   // what is this crap?
-  if (wc2 < 1e-8)
-      wc2 = 1e-8;
-  if (wc  > doublePi-1e-8)
-      wc  = doublePi-1e-8;
+  if (wc2 < anti_denormal_vsa)
+      wc2 = anti_denormal_vsa;
+  if (wc  > doublePi-anti_denormal_vsa)
+      wc  = doublePi-anti_denormal_vsa;
 
   a =     cos ((wc + wc2) * 0.5) /
           cos ((wc - wc2) * 0.5);
@@ -181,8 +182,11 @@ BandPassTransform::BandPassTransform (double fc,
     //
 #ifndef NDEBUG
     ComplexPair p2 = transform (pair.poles.second);
-    assert (p2.first == std::conj (p1.first));
+    ComplexPair z2 = transform (pair.zeros.second);
+    assert (p2.first  == std::conj (p1.first));
     assert (p2.second == std::conj (p1.second));
+    assert (z2.first  == std::conj (z1.first));
+    assert (z2.second == std::conj (z1.second));
 #endif
 
     digital.addPoleZeroConjugatePairs (p1.first, z1.first);
@@ -260,8 +264,21 @@ BandStopTransform::BandStopTransform (double fc,
   for (int i = 0; i < pairs; ++i)
   {
     const PoleZeroPair& pair = analog[i];
+
+#ifndef NDEBUG
+    assert(!isinf(pair.poles.first.real()));
+    assert(!isinf(pair.poles.first.imag()));
+#endif
+
     ComplexPair p  = transform (pair.poles.first);
     ComplexPair z  = transform (pair.zeros.first);
+
+#ifndef NDEBUG
+    assert(!isinf(p.first.real()));
+    assert(!isinf(p.first.imag()));
+    assert(!isinf(z.first.real()));
+    assert(!isinf(z.first.imag()));
+#endif
 
     //
     // Optimize out the calculations for conjugates for Release builds
@@ -278,13 +295,14 @@ BandStopTransform::BandStopTransform (double fc,
 
     // get the conjugates into pc and zc
     if (zc.first == z.first)
-      std::swap (zc.first, zc.second);
+    {
+        std::swap (zc.first, zc.second);
+    }
 
     assert (pc.first  == std::conj (p.first));
     assert (pc.second == std::conj (p.second));
     assert (zc.first  == std::conj (z.first));
     assert (zc.second == std::conj (z.second));
-
 #endif
 
     digital.addPoleZeroConjugatePairs (p.first, z.first);

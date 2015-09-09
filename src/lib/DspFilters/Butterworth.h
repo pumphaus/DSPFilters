@@ -59,9 +59,6 @@ public:
   AnalogLowPass ();
 
   void design (const int numPoles);
-
-private:
-  int m_numPoles;
 };
 
 //------------------------------------------------------------------------------
@@ -74,7 +71,6 @@ public:
   void design (int numPoles, double gainDb);
 
 private:
-  int m_numPoles;
   double m_gainDb;
 };
 
@@ -82,21 +78,21 @@ private:
 
 // Factored implementations to reduce template instantiations
 
-struct LowPassBase : PoleFilterBase <AnalogLowPass>
+struct LowPassBase : AnalogPoleFilterBase <AnalogLowPass>
 {
   void setup (int order,
               double sampleRate,
               double cutoffFrequency);
 };
 
-struct HighPassBase : PoleFilterBase <AnalogLowPass>
+struct HighPassBase : AnalogPoleFilterBase <AnalogLowPass>
 {
   void setup (int order,
               double sampleRate,
               double cutoffFrequency);
 };
 
-struct BandPassBase : PoleFilterBase <AnalogLowPass>
+struct BandPassBase : AnalogPoleFilterBase <AnalogLowPass>
 {
   void setup (int order,
               double sampleRate,
@@ -104,7 +100,7 @@ struct BandPassBase : PoleFilterBase <AnalogLowPass>
               double widthFrequency);
 };
 
-struct BandStopBase : PoleFilterBase <AnalogLowPass>
+struct BandStopBase : AnalogPoleFilterBase <AnalogLowPass>
 {
   void setup (int order,
               double sampleRate,
@@ -112,7 +108,7 @@ struct BandStopBase : PoleFilterBase <AnalogLowPass>
               double widthFrequency);
 };
 
-struct LowShelfBase : PoleFilterBase <AnalogLowShelf>
+struct LowShelfBase : AnalogPoleFilterBase <AnalogLowShelf>
 {
   void setup (int order,
               double sampleRate,
@@ -120,7 +116,7 @@ struct LowShelfBase : PoleFilterBase <AnalogLowShelf>
               double gainDb);
 };
 
-struct HighShelfBase : PoleFilterBase <AnalogLowShelf>
+struct HighShelfBase : AnalogPoleFilterBase <AnalogLowShelf>
 {
   void setup (int order,
               double sampleRate,
@@ -128,7 +124,7 @@ struct HighShelfBase : PoleFilterBase <AnalogLowShelf>
               double gainDb);
 };
 
-struct BandShelfBase : PoleFilterBase <AnalogLowShelf>
+struct BandShelfBase : AnalogPoleFilterBase <AnalogLowShelf>
 {
   void setup (int order,
               double sampleRate,
@@ -333,13 +329,13 @@ struct HighPassDescription
 
 struct BandPassDescription
 {
-  static Kind getKind () { return kindHighPass; }
+  static Kind getKind () { return kindBandPass; }
   static const char* getName() { return "Butterworth Band Pass"; }
 };
 
 struct BandStopDescription
 {
-  static Kind getKind () { return kindHighPass; }
+  static Kind getKind () { return kindBandStop; }
   static const char* getName() { return "Butterworth Band Stop"; }
 };
 

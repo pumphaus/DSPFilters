@@ -41,8 +41,8 @@ namespace Dsp {
 namespace Butterworth {
 
 AnalogLowPass::AnalogLowPass ()
-  : m_numPoles (-1)
 {
+  m_numPoles = -1;
   setNormal (0, 1);
 }
 
@@ -59,6 +59,8 @@ void AnalogLowPass::design (int numPoles)
     for (int i = 0; i < pairs; ++i)
     {
       complex_t c = std::polar (1., doublePi_2 + (2 * i + 1) * doublePi / n2);
+      assert(!isinf(c.real()));
+      assert(!isinf(c.imag()));
       addPoleZeroConjugatePairs (c, infinity());
     }
 
@@ -70,8 +72,8 @@ void AnalogLowPass::design (int numPoles)
 //------------------------------------------------------------------------------
 
 AnalogLowShelf::AnalogLowShelf ()
-  : m_numPoles (-1)
 {
+  m_numPoles = -1;
   setNormal (doublePi, 1);
 }
 
@@ -94,7 +96,7 @@ void AnalogLowShelf::design (int numPoles, double gainDb)
     for (int i = 1; i <= pairs; ++i)
     {
       const double theta = doublePi * (0.5 - (2 * i - 1) / n2);
-      addPoleZeroConjugatePairs (std::polar (gp, theta), std::polar (gz, theta));
+      addPoleZeroConjugatePairs (std::polar (std::abs(gp), theta), std::polar (std::abs(gz), theta));
     }
     
     if (numPoles & 1)
@@ -202,7 +204,7 @@ void BandShelfBase::setup (int order,
                      m_analogProto);
 
   // HACK!
-  m_digitalProto.setNormal (((centerFrequency/sampleRate) < 0.25) ? doublePi : 0, 1);
+  // m_digitalProto.setNormal (((centerFrequency/sampleRate) < 0.25) ? doublePi : 0, 1);
 
   Cascade::setLayout (m_digitalProto);
 }

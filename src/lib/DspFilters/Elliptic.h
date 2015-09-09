@@ -117,7 +117,6 @@ private:
   double m_rootR[100];
   double m_rootI[100];
 
-  int m_numPoles;
   double m_rippleDb;
   double m_rolloff;
 };
@@ -126,7 +125,7 @@ private:
 
 // Factored implementations to reduce template instantiations
 
-struct LowPassBase : PoleFilterBase <AnalogLowPass>
+struct LowPassBase : AnalogPoleFilterBase <AnalogLowPass>
 {
   void setup (int order,
               double sampleRate,
@@ -135,7 +134,7 @@ struct LowPassBase : PoleFilterBase <AnalogLowPass>
               double rolloff);
 };
 
-struct HighPassBase : PoleFilterBase <AnalogLowPass>
+struct HighPassBase : AnalogPoleFilterBase <AnalogLowPass>
 {
   void setup (int order,
               double sampleRate,
@@ -144,7 +143,7 @@ struct HighPassBase : PoleFilterBase <AnalogLowPass>
               double rolloff);
 };
 
-struct BandPassBase : PoleFilterBase <AnalogLowPass>
+struct BandPassBase : AnalogPoleFilterBase <AnalogLowPass>
 {
   void setup (int order,
               double sampleRate,
@@ -154,7 +153,7 @@ struct BandPassBase : PoleFilterBase <AnalogLowPass>
               double rolloff);
 };
 
-struct BandStopBase : PoleFilterBase <AnalogLowPass>
+struct BandStopBase : AnalogPoleFilterBase <AnalogLowPass>
 {
   void setup (int order,
               double sampleRate,
@@ -293,13 +292,13 @@ struct HighPassDescription
 
 struct BandPassDescription
 {
-  static Kind getKind () { return kindHighPass; }
+  static Kind getKind () { return kindBandPass; }
   static const char* getName() { return "Elliptic Band Pass"; }
 };
 
 struct BandStopDescription
 {
-  static Kind getKind () { return kindHighPass; }
+  static Kind getKind () { return kindBandStop; }
   static const char* getName() { return "Elliptic Band Stop"; }
 };
 

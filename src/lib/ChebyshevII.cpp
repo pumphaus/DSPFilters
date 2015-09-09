@@ -44,8 +44,8 @@ namespace ChebyshevII {
 // http://cnx.org/content/m16906/latest/
 
 AnalogLowPass::AnalogLowPass ()
-  : m_numPoles (-1)
 {
+  m_numPoles = -1;
   setNormal (0, 1);
 }
 
@@ -94,8 +94,8 @@ void AnalogLowPass::design (int numPoles,
 //
 
 AnalogLowShelf::AnalogLowShelf ()
-  : m_numPoles (-1)
 {
+  m_numPoles = -1;
   setNormal (doublePi, 1);
 }
 
@@ -129,7 +129,8 @@ void AnalogLowShelf::design (int numPoles,
     if (Gb != G0 )
       eps = sqrt((G*G-Gb*Gb)/(Gb*Gb-G0*G0));
     else
-      eps = G-1; // This is surely wrong
+      eps = sqrtf( powf(10.0f, G / 10.0f) - 1.0f );
+      // eps = G-1; // This is surely wrong
 
     const double b = pow (G/eps+Gb*sqrt(1+1/(eps*eps)), 1./numPoles);
     const double u = log (b / g0);
@@ -261,7 +262,7 @@ void BandShelfBase::setup (int order,
                      m_digitalProto,
                      m_analogProto);
 
-  m_digitalProto.setNormal (((centerFrequency/sampleRate) < 0.25) ? doublePi : 0, 1);
+  // m_digitalProto.setNormal (((centerFrequency/sampleRate) < 0.25) ? doublePi : 0, 1);
 
   Cascade::setLayout (m_digitalProto);
 }

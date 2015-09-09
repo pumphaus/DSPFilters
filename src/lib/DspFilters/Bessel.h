@@ -91,9 +91,6 @@ public:
 
   void design (const int numPoles,
                WorkspaceBase* w);
-
-private:
-  int m_numPoles;
 };
 
 //------------------------------------------------------------------------------
@@ -108,7 +105,6 @@ public:
                WorkspaceBase* w);
 
 private:
-  int m_numPoles;
   double m_gainDb;
 };
 
@@ -116,7 +112,7 @@ private:
 
 // Factored implementations to reduce template instantiations
 
-struct LowPassBase : PoleFilterBase <AnalogLowPass>
+struct LowPassBase : AnalogPoleFilterBase <AnalogLowPass>
 {
   void setup (int order,
               double sampleRate,
@@ -124,7 +120,7 @@ struct LowPassBase : PoleFilterBase <AnalogLowPass>
               WorkspaceBase* w);
 };
 
-struct HighPassBase : PoleFilterBase <AnalogLowPass>
+struct HighPassBase : AnalogPoleFilterBase <AnalogLowPass>
 {
   void setup (int order,
               double sampleRate,
@@ -132,7 +128,7 @@ struct HighPassBase : PoleFilterBase <AnalogLowPass>
               WorkspaceBase* w);
 };
 
-struct BandPassBase : PoleFilterBase <AnalogLowPass>
+struct BandPassBase : AnalogPoleFilterBase <AnalogLowPass>
 {
   void setup (int order,
               double sampleRate,
@@ -141,7 +137,7 @@ struct BandPassBase : PoleFilterBase <AnalogLowPass>
               WorkspaceBase* w);
 };
 
-struct BandStopBase : PoleFilterBase <AnalogLowPass>
+struct BandStopBase : AnalogPoleFilterBase <AnalogLowPass>
 {
   void setup (int order,
               double sampleRate,
@@ -150,7 +146,7 @@ struct BandStopBase : PoleFilterBase <AnalogLowPass>
               WorkspaceBase* w);
 };
 
-struct LowShelfBase : PoleFilterBase <AnalogLowShelf>
+struct LowShelfBase : AnalogPoleFilterBase <AnalogLowShelf>
 {
   void setup (int order,
               double sampleRate,
@@ -401,13 +397,13 @@ struct HighPassDescription
 
 struct BandPassDescription
 {
-  static Kind getKind () { return kindHighPass; }
+  static Kind getKind () { return kindBandPass; }
   static const char* getName() { return "Bessel Band Pass"; }
 };
 
 struct BandStopDescription
 {
-  static Kind getKind () { return kindHighPass; }
+  static Kind getKind () { return kindBandStop; }
   static const char* getName() { return "Bessel Band Stop"; }
 };
 

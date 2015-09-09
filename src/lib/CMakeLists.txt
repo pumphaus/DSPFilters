@@ -15,6 +15,7 @@ set(DspFilters_SRC
     Legendre.cpp
     Param.cpp
     PoleFilter.cpp
+    RASTA.cpp
     RBJ.cpp
     RootFinder.cpp
     State.cpp
